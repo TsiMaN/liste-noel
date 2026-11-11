@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listes de Noël</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#c8102e; --red-d:#8e0b20; --green:#13633b; --green-d:#0b3f25; --gold:#e8b23a;
+  --cream:#fff8ec; --ink:#2b1d16; --muted:#6f5d52;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:'Nunito',system-ui,sans-serif; color:var(--ink);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,.08) 0 2px, transparent 3px) 0 0/60px 60px,
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.06) 0 1.5px, transparent 2.5px) 0 0/45px 45px,
+    linear-gradient(180deg,#0e3b26 0%,#0b2e1e 100%);
+  min-height:100vh;
+}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:1150px;margin:0 auto;padding:18px 16px 60px}
+
+/* ---------- Header ---------- */
+header{
+  position:relative; background:var(--cream); border-radius:28px;
+  padding:22px 24px; display:grid; grid-template-columns:140px 1fr 140px; align-items:center; gap:14px;
+  box-shadow:0 10px 0 var(--red-d), 0 18px 40px rgba(0,0,0,.35);
+  border:6px solid var(--red);
+}
+header::before{ /* guirlande */
+  content:""; position:absolute; left:18px; right:18px; top:-14px; height:24px;
+  background:radial-gradient(circle,var(--gold) 0 5px,transparent 6px) 0 0/34px 24px,
+             radial-gradient(circle,#e63946 0 5px,transparent 6px) 17px 0/34px 24px;
+}
+.portrait{width:130px;height:130px;border-radius:50%;overflow:hidden;border:6px solid var(--gold);
+  box-shadow:0 0 0 5px var(--green),0 6px 14px rgba(0,0,0,.25);background:#eee;justify-self:start}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.portrait .ph{display:grid;place-items:center;height:100%;font-size:54px}
+.santa{width:140px;justify-self:end}
+h1{font-family:'Mountains of Christmas',cursive;font-weight:700;color:var(--red);
+  font-size:clamp(34px,6vw,64px);line-height:1;margin:0;text-align:center;
+  text-shadow:2px 2px 0 #fff,4px 4px 0 rgba(19,99,59,.25)}
+.sub{text-align:center;margin:8px 0 0;color:var(--green);font-weight:800;font-size:clamp(14px,2vw,17px)}
+
+/* ---------- Tabs ---------- */
+.tabs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:26px 0 8px}
+.tab{font:inherit;font-weight:900;font-size:17px;border:0;cursor:pointer;padding:10px 22px;border-radius:999px;
+  background:rgba(255,255,255,.12);color:#fff;border:2px solid rgba(255,255,255,.35)}
+.tab[aria-selected="true"]{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.tab:focus-visible,.btn:focus-visible,.check:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+.notice{background:#fff3cd;color:#5c4400;border-radius:14px;padding:12px 16px;margin:18px auto;max-width:720px;font-weight:700;text-align:center}
+.empty{color:#fff;text-align:center;opacity:.85;font-size:18px;margin:40px 0}
+
+/* ---------- Toys board ---------- */
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:34px 26px;margin-top:30px;padding:0 6px}
+.card{position:relative;background:#fff;border-radius:20px;padding:16px 16px 14px;
+  box-shadow:0 8px 0 rgba(0,0,0,.18),0 14px 26px rgba(0,0,0,.25);
+  transform:rotate(var(--r,0deg)); transition:transform .25s, filter .3s, opacity .3s;
+  display:flex;flex-direction:column}
+.card:hover{transform:rotate(0) translateY(-4px)}
+.card::before{ /* noeud */
+  content:"🎀";position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:34px}
+.card .pic{aspect-ratio:1/1;border-radius:14px;background:#f6f1e7;display:grid;place-items:center;overflow:hidden;margin-top:6px}
+.card .pic img{width:100%;height:100%;object-fit:contain;display:block}
+.card .pic .ph{font-size:64px}
+.card h3{font-size:17px;line-height:1.25;margin:12px 0 6px;font-weight:800;min-height:2.5em}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}
+.price{background:var(--red);color:#fff;font-weight:900;font-size:22px;padding:4px 14px 4px 18px;border-radius:6px 999px 999px 6px;
+  position:relative;white-space:nowrap}
+.price::before{content:"";position:absolute;left:6px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:#fff}
+.price.na{background:#9c8f86;font-size:15px}
+.shop{font-size:13px;color:var(--green);font-weight:800;text-decoration:none;display:inline-block;margin-bottom:10px}
+.shop:hover{text-decoration:underline}
+.check{display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:900;color:var(--green-d);font-size:15px;
+  background:#e9f5ee;border:2px solid var(--green);border-radius:12px;padding:6px 10px;user-select:none}
+.check input{appearance:none;width:26px;height:26px;border:3px solid var(--green);border-radius:7px;background:#fff;margin:0;cursor:pointer;display:grid;place-items:center}
+.check input:checked{background:var(--green)}
+.check input:checked::after{content:"✓";color:#fff;font-weight:900;font-size:17px}
+.card.taken{filter:grayscale(1);opacity:.55}
+.card.taken .check{cursor:default}
+.stamp{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%) rotate(-14deg);border:4px solid var(--red);color:var(--red);
+  font-weight:900;font-size:22px;padding:4px 12px;border-radius:10px;background:rgba(255,255,255,.85);letter-spacing:.5px;white-space:nowrap;
+  filter:none}
+.taken-wrap{position:relative}
+.owner-tools{display:flex;gap:6px;margin-top:10px}
+.mini{font:inherit;font-size:12px;font-weight:800;border:1px solid #ccc;background:#fafafa;border-radius:8px;padding:4px 8px;cursor:pointer}
+.mini.danger{color:var(--red);border-color:#f0b9c1}
+
+/* ---------- Modal ---------- */
+.overlay{position:fixed;inset:0;background:rgba(8,24,15,.72);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+.overlay.open{display:flex}
+.modal{background:var(--cream);border-radius:24px;max-width:420px;width:100%;padding:18px 22px 22px;text-align:center;border:5px solid var(--gold);
+  box-shadow:0 20px 50px rgba(0,0,0,.5);animation:pop .35s ease-out}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.scene{position:relative;height:190px;overflow:hidden}
+.scene .gift{position:absolute;left:50%;top:0;width:64px;margin-left:-32px;animation:fall 1.3s cubic-bezier(.55,0,.75,.4) forwards}
+@keyframes fall{0%{transform:translateY(-80px) rotate(-25deg)}70%{transform:translateY(95px) rotate(10deg)}85%{transform:translateY(88px) rotate(4deg)}100%{transform:translateY(118px) rotate(0) scale(.6);opacity:0}}
+.scene .sack{position:absolute;left:50%;bottom:0;width:170px;margin-left:-85px;animation:wobble .5s ease-in-out 1.05s 2}
+@keyframes wobble{0%,100%{transform:rotate(0)}30%{transform:rotate(-5deg) scaleY(.96)}70%{transform:rotate(4deg)}}
+.modal h2{font-family:'Mountains of Christmas',cursive;color:var(--red);font-size:34px;margin:6px 0 4px}
+.modal p{margin:6px 0 12px;color:var(--muted);font-weight:700}
+.modal .what{color:var(--ink);font-weight:900}
+.modal label{display:block;text-align:left;font-weight:800;margin:10px 0 6px}
+.modal input[type=text]{width:100%;font:inherit;font-size:18px;padding:10px 12px;border-radius:12px;border:2px solid #d9cbb7;background:#fff}
+.modal input[type=text]:focus{outline:none;border-color:var(--green)}
+.actions{display:flex;gap:10px;justify-content:center;margin-top:16px}
+.btn{font:inherit;font-weight:900;font-size:16px;border:0;border-radius:12px;padding:11px 18px;cursor:pointer}
+.btn.go{background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-d)}
+.btn.no{background:#eadfce;color:var(--ink)}
+.btn:disabled{opacity:.6;cursor:wait}
+.err{color:var(--red);font-weight:800;min-height:1.2em;margin-top:8px}
+
+/* ---------- Owner dashboard ---------- */
+.panel{background:var(--cream);border-radius:22px;padding:20px 22px;margin-top:48px;border:4px solid var(--gold)}
+.panel h2{font-family:'Mountains of Christmas',cursive;color:var(--green);font-size:34px;margin:0 0 4px}
+.panel .hint{color:var(--muted);margin:0 0 14px;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid #e6dacb;vertical-align:middle}
+th{font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.forms{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:22px}
+.box{background:#fff;border-radius:16px;padding:14px 16px;border:1px solid #eadfce}
+.box h3{margin:0 0 8px;font-size:17px}
+.box label{display:block;font-weight:800;font-size:13px;margin:8px 0 4px}
+.box input,.box select{width:100%;font:inherit;padding:8px 10px;border-radius:10px;border:1.5px solid #d9cbb7}
+.box .btn{margin-top:12px}
+.ok{color:var(--green);font-weight:800;min-height:1.2em;margin-top:6px}
+@media (max-width:640px){
+  header{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .portrait,.santa{justify-self:center}
+  .santa{width:96px;order:-1;position:absolute;right:10px;top:10px}
+  .portrait{width:110px;height:110px}
+  table{font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){.scene .gift,.scene .sack,.modal{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="snow" aria-hidden="true"></canvas>
+<div class="wrap">
+  <header>
+    <div class="portrait" id="portrait"><div class="ph">🎄</div></div>
+    <div>
+      <h1 id="title">Liste de Noël</h1>
+      <p class="sub" id="sub">Coche un cadeau pour le réserver : il sera grisé pour tout le monde 🎁</p>
+    </div>
+    <svg class="santa" viewBox="0 0 200 200" role="img" aria-label="Père Noël">
+      <circle cx="100" cy="112" r="78" fill="#fff"/>
+      <path d="M38 92 Q100 -20 162 92 Z" fill="#c8102e"/>
+      <path d="M150 72 Q178 60 176 30" stroke="#c8102e" stroke-width="16" fill="none" stroke-linecap="round"/>
+      <circle cx="176" cy="28" r="14" fill="#fff"/>
+      <rect x="32" y="84" width="136" height="24" rx="12" fill="#fff"/>
+      <ellipse cx="100" cy="132" rx="52" ry="40" fill="#ffd9c2"/>
+      <path d="M44 140 Q50 200 100 196 Q150 200 156 140 Q140 168 100 166 Q60 168 44 140Z" fill="#fff"/>
+      <circle cx="82" cy="126" r="6" fill="#2b1d16"/><circle cx="118" cy="126" r="6" fill="#2b1d16"/>
+      <circle cx="84" cy="124" r="2" fill="#fff"/><circle cx="120" cy="124" r="2" fill="#fff"/>
+      <circle cx="70" cy="142" r="8" fill="#ff9aa2" opacity=".7"/><circle cx="130" cy="142" r="8" fill="#ff9aa2" opacity=".7"/>
+      <circle cx="100" cy="140" r="8" fill="#f08a7e"/>
+      <path d="M78 152 Q100 144 100 154 Q100 144 122 152 Q112 160 100 156 Q88 160 78 152Z" fill="#fff" stroke="#eee"/>
+      <path d="M92 162 Q100 170 108 162" stroke="#c8102e" stroke-width="4" fill="none" stroke-linecap="round"/>
+    </svg>
+  </header>
+
+  <nav class="tabs" id="tabs" role="tablist"></nav>
+  <div id="notice"></div>
+  <section class="board" id="board" aria-live="polite"></section>
+
+
+</div>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+// Adresse du script Google (se termine par /exec)
+const API = 'https://script.google.com/macros/s/AKfycbxJNTB3ZJ3dUBp1To3qaIrQ-SLkrWBGrDngKwXGKN_QFe6ILSgrDZFcWwYyxAZq81_z/exec';
+
+(() => {
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const safeUrl = u => /^https?:\/\//i.test(u || '') ? u : '';
+  const fmtPrice = p => (typeof p === 'number' && isFinite(p)) ? p.toFixed(2).replace('.', ',') + ' €' : null;
+  const shopName = u => { try { const h = new URL(u).hostname.replace(/^www\./,''); return h.includes('smyths') ? 'Smyths Toys' : h.includes('grande') ? 'La Grande Récré' : h; } catch { return 'la boutique'; } };
+  const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} } };
+
+  // Code famille : lu dans le lien (#code), puis mémorisé dans le navigateur
+  let code = decodeURIComponent((location.hash || '').slice(1)) || store.get('xmas-code') || '';
+  if (location.hash) { store.set('xmas-code', code); history.replaceState(null, '', location.pathname); }
+
+  let children = [], toys = [], reserved = new Set();
+  let current = store.get('xmas-tab');
+
+  /* ---------- Données ---------- */
+  async function load() {
+    const r = await fetch(API + '?code=' + encodeURIComponent(code), { cache: 'no-store' });
+    const d = await r.json();
+    if (!d.ok) throw new Error(d.error || 'erreur');
+    children = (d.children || []).sort((a,b) => a.order - b.order);
+    toys = d.toys || [];
+    reserved = new Set(d.reserved || []);
+  }
+  async function reserve(toyId, name) {
+    const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ code, toyId, name }) });
+    return r.json();
+  }
+
+  /* ---------- Affichage ---------- */
+  function renderHeader() {
+    const c = children.find(x => x.id === current);
+    $('#title').textContent = c ? 'Liste de Noël de ' + c.name : 'Liste de Noël';
+    document.title = c ? 'Liste de Noël de ' + c.name : 'Liste de Noël';
+    $('#portrait').innerHTML = c && /^data:image\//.test(c.photo || '')
+      ? `<img src="${c.photo}" alt="Photo de ${esc(c.name)}">` : '<div class="ph">🎄</div>';
+  }
+  function renderTabs() {
+    const t = $('#tabs');
+    t.hidden = children.length < 2;
+    t.innerHTML = children.map(c => `<button class="tab" role="tab" data-id="${esc(c.id)}" aria-selected="${c.id === current}">${esc(c.name)}</button>`).join('');
+  }
+  const tilts = [-2.2, 1.6, -1, 2.4, -1.8, 1, 2, -2.6];
+  function renderBoard() {
+    const list = toys.filter(t => t.child === current).sort((a,b) => a.order - b.order);
+    const b = $('#board');
+    if (!list.length) { b.innerHTML = '<p class="empty" style="grid-column:1/-1">La liste arrive bientôt… ✨</p>'; return; }
+    b.innerHTML = list.map((t, i) => {
+      const taken = reserved.has(t.id), price = fmtPrice(t.price), img = safeUrl(t.image), url = safeUrl(t.url);
+      return `<article class="card ${taken ? 'taken' : ''}" style="--r:${tilts[i % tilts.length]}deg">
+        <div class="taken-wrap"><div class="pic">${img ? `<img src="${esc(img)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '<span class="ph">🎁</span>'}</div>
+        ${taken ? '<div class="stamp">Déjà réservé</div>' : ''}</div>
+        <h3>${esc(t.name)}</h3>
+        ${url ? `<a class="shop" href="${esc(url)}" target="_blank" rel="noopener">Voir chez ${esc(shopName(url))} ↗</a>` : '<span></span>'}
+        <div class="row">
+          <span class="price ${price ? '' : 'na'}">${price || 'Prix à venir'}</span>
+          <label class="check"><input type="checkbox" data-toy="${esc(t.id)}" ${taken ? 'checked disabled' : ''} aria-label="Réserver ${esc(t.name)}">${taken ? 'Pris' : "J'offre"}</label>
+        </div>
+      </article>`;
+    }).join('');
+  }
+  function renderAll() {
+    if (!children.find(c => c.id === current)) current = children[0]?.id || null;
+    renderHeader(); renderTabs(); renderBoard();
+  }
+  function notice(html) { $('#notice').innerHTML = html ? `<div class="notice">${html}</div>` : ''; }
+  function locked() {
+    $('#sub').textContent = 'Cette liste est privée.';
+    $('#board').innerHTML = '';
+    notice('Ouvre la liste avec le lien complet que tu as reçu (il contient le code famille).');
+  }
+
+  /* ---------- Fenêtre de confirmation ---------- */
+  const GIFT = `<svg class="gift" viewBox="0 0 64 64"><rect x="6" y="24" width="52" height="36" rx="4" fill="#c8102e"/><rect x="2" y="16" width="60" height="12" rx="3" fill="#e63946"/><rect x="27" y="16" width="10" height="44" fill="#e8b23a"/><path d="M32 16 C20 2 8 10 18 16 Z M32 16 C44 2 56 10 46 16 Z" fill="#e8b23a"/></svg>`;
+  const SACK = `<svg class="sack" viewBox="0 0 170 110"><path d="M20 30 Q85 10 150 30 L162 92 Q85 118 8 92 Z" fill="#a0522d"/><path d="M20 30 Q85 10 150 30 Q85 44 20 30Z" fill="#5c2f17"/><path d="M14 74 Q85 96 156 74" stroke="#e8b23a" stroke-width="6" fill="none"/><circle cx="85" cy="70" r="10" fill="#e8b23a"/><path d="M60 52 Q66 40 72 52 M98 52 Q104 40 110 52" stroke="#7a3d1e" stroke-width="3" fill="none"/></svg>`;
+  let pending = null;
+  function openModal(toy) {
+    pending = toy;
+    $('#modal').innerHTML = `
+      <div class="scene">${GIFT}${SACK}</div>
+      <h2 id="mTitle">Dans la hotte ?</h2>
+      <p>Tu veux offrir <span class="what">${esc(toy.name)}</span> ?</p>
+      <form id="mForm">
+        <label for="mName">Ton prénom</label>
+        <input type="text" id="mName" autocomplete="given-name" required maxlength="40" value="${esc(store.get('xmas-name') || '')}" placeholder="ex. Mamie Jeanne">
+        <div class="actions">
+          <button type="button" class="btn no" id="mNo">Annuler</button>
+          <button type="submit" class="btn go" id="mGo">Je confirme 🎁</button>
+        </div>
+        <div class="err" id="mErr"></div>
+      </form>`;
+    $('#overlay').classList.add('open');
+    setTimeout(() => $('#mName')?.focus(), 50);
+    $('#mNo').onclick = closeModal;
+    $('#mForm').onsubmit = e => { e.preventDefault(); confirmRes(); };
+  }
+  function closeModal() { $('#overlay').classList.remove('open'); pending = null; renderBoard(); }
+  $('#overlay').addEventListener('click', e => { if (e.target.id === 'overlay') closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#overlay').classList.contains('open')) closeModal(); });
+
+  async function confirmRes() {
+    const name = $('#mName').value.trim();
+    if (!name) { $('#mErr').textContent = 'Écris ton prénom pour confirmer.'; return; }
+    const toy = pending, go = $('#mGo'); go.disabled = true; go.textContent = 'Envoi…'; $('#mErr').textContent = '';
+    try {
+      const r = await reserve(toy.id, name);
+      if (!r.ok) {
+        if (r.error === 'taken') { reserved.add(toy.id); $('#mErr').textContent = 'Oups, quelqu\'un vient juste de le réserver !'; }
+        else $('#mErr').textContent = 'La réservation n\'a pas pu être enregistrée.';
+        go.disabled = false; go.textContent = 'Je confirme 🎁'; return;
+      }
+      reserved.add(toy.id); store.set('xmas-name', name);
+      $('#modal').innerHTML = `<div class="scene">${SACK}</div><h2>Merci ${esc(name)} !</h2><p><span class="what">${esc(toy.name)}</span> est réservé. Il est maintenant grisé pour tout le monde.</p><div class="actions"><button class="btn go" id="mDone">Fermer</button></div>`;
+      $('#mDone').onclick = closeModal; $('#mDone').focus();
+    } catch {
+      go.disabled = false; go.textContent = 'Je confirme 🎁';
+      $('#mErr').textContent = 'Connexion impossible. Réessaie dans un instant.';
+    }
+  }
+
+  /* ---------- Événements ---------- */
+  $('#tabs').addEventListener('click', e => {
+    const b = e.target.closest('.tab'); if (!b) return;
+    current = b.dataset.id; store.set('xmas-tab', current); renderAll();
+  });
+  $('#board').addEventListener('change', e => {
+    const cb = e.target.closest('input[data-toy]'); if (!cb) return;
+    const toy = toys.find(t => t.id === cb.dataset.toy);
+    if (!toy || reserved.has(toy.id)) { cb.checked = true; return; }
+    openModal(toy);
+  });
+
+  /* ---------- Démarrage ---------- */
+  renderAll();
+  $('#board').innerHTML = '<p class="empty" style="grid-column:1/-1">Les lutins préparent la liste…</p>';
+  if (!code) { locked(); }
+  else load().then(renderAll).catch(err => {
+    if (String(err.message) === 'code') locked();
+    else { $('#board').innerHTML = ''; notice('La liste n\'a pas pu être chargée. Vérifie ta connexion et recharge la page.'); }
+  });
+  // Rafraîchit les réservations toutes les 60 s (si la page reste ouverte)
+  setInterval(() => { if (code && !document.hidden && !pending) load().then(renderBoard).catch(() => {}); }, 60000);
+
+  /* ---------- Neige ---------- */
+  const cv = $('#snow'), ctx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W, H, flakes = [];
+  function size() { W = cv.width = innerWidth; H = cv.height = innerHeight; flakes = Array.from({length: Math.min(90, W/12)}, () => ({ x: Math.random()*W, y: Math.random()*H, r: 1 + Math.random()*2.6, s: .3 + Math.random()*.9, d: Math.random()*6 })); }
+  function tick() { ctx.clearRect(0,0,W,H); ctx.fillStyle = 'rgba(255,255,255,.8)';
+    for (const f of flakes) { f.y += f.s; f.d += .01; f.x += Math.sin(f.d)*.4; if (f.y > H) { f.y = -5; f.x = Math.random()*W; } ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, 6.3); ctx.fill(); }
+    if (!reduce) requestAnimationFrame(tick); }
+  addEventListener('resize', size); size(); tick();
+})();
+</script>
+</body>
+</html>
