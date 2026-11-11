@@ -185,6 +185,7 @@ const API = 'https://script.google.com/macros/s/AKfycbxJNTB3ZJ3dUBp1To3qaIrQ-SLk
   const $ = s => document.querySelector(s);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const safeUrl = u => /^https?:\/\//i.test(u || '') ? u : '';
+  const safeImg = u => /^https?:\/\//i.test(u || '') || /^images\/[\w.-]+$/.test(u || '') ? u : '';
   const fmtPrice = p => (typeof p === 'number' && isFinite(p)) ? p.toFixed(2).replace('.', ',') + ' €' : null;
   const shopName = u => { try { const h = new URL(u).hostname.replace(/^www\./,''); return h.includes('smyths') ? 'Smyths Toys' : h.includes('grande') ? 'La Grande Récré' : h; } catch { return 'la boutique'; } };
   const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} } };
@@ -231,7 +232,7 @@ const API = 'https://script.google.com/macros/s/AKfycbxJNTB3ZJ3dUBp1To3qaIrQ-SLk
     const b = $('#board');
     if (!list.length) { b.innerHTML = '<p class="empty" style="grid-column:1/-1">La liste arrive bientôt… ✨</p>'; return; }
     b.innerHTML = list.map((t, i) => {
-      const taken = reserved.has(t.id), price = fmtPrice(t.price), img = safeUrl(t.image), url = safeUrl(t.url);
+      const taken = reserved.has(t.id), price = fmtPrice(t.price), img = safeImg(String(t.image || '').trim()), url = safeUrl(t.url);
       return `<article class="card ${taken ? 'taken' : ''}" style="--r:${tilts[i % tilts.length]}deg">
         <div class="taken-wrap"><div class="pic">${img ? `<img src="${esc(img)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '<span class="ph">🎁</span>'}</div>
         ${taken ? '<div class="stamp">Déjà réservé</div>' : ''}</div>
