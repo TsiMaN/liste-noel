@@ -190,8 +190,10 @@ const API = 'https://script.google.com/macros/s/AKfycbxJNTB3ZJ3dUBp1To3qaIrQ-SLk
   const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} } };
 
   // Code famille : lu dans le lien (#code), puis mémorisé dans le navigateur
-  let code = decodeURIComponent((location.hash || '').slice(1)) || store.get('xmas-code') || '';
-  if (location.hash) { store.set('xmas-code', code); history.replaceState(null, '', location.pathname); }
+  let code = decodeURIComponent((location.hash || '').slice(1)).trim() || store.get('xmas-code') || '';
+  if (location.hash) history.replaceState(null, '', location.pathname);
+  // Si on colle un nouveau lien avec un code dans la même page, on recharge
+  addEventListener('hashchange', () => location.reload());
 
   let children = [], toys = [], reserved = new Set();
   let current = store.get('xmas-tab');
@@ -317,8 +319,8 @@ const API = 'https://script.google.com/macros/s/AKfycbxJNTB3ZJ3dUBp1To3qaIrQ-SLk
   renderAll();
   $('#board').innerHTML = '<p class="empty" style="grid-column:1/-1">Les lutins préparent la liste…</p>';
   if (!code) { locked(); }
-  else load().then(renderAll).catch(err => {
-    if (String(err.message) === 'code') locked();
+  else load().then(() => { store.set('xmas-code', code); renderAll(); }).catch(err => {
+    if (String(err.message) === 'code') { try { localStorage.removeItem('xmas-code'); } catch {} locked(); }
     else { $('#board').innerHTML = ''; notice('La liste n\'a pas pu être chargée. Vérifie ta connexion et recharge la page.'); }
   });
   // Rafraîchit les réservations toutes les 60 s (si la page reste ouverte)
