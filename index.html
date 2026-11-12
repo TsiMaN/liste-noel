@@ -66,8 +66,8 @@ h1{font-family:'Mountains of Christmas',cursive;font-weight:700;color:var(--red)
 .card:hover{transform:rotate(0) translateY(-4px)}
 .card::before{ /* noeud */
   content:"🎀";position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:34px}
-.card .pic{aspect-ratio:1/1;border-radius:14px;background:#f6f1e7;display:grid;place-items:center;overflow:hidden;margin-top:6px}
-.card .pic img{width:100%;height:100%;object-fit:contain;display:block}
+.card .pic{position:relative;aspect-ratio:1/1;border-radius:14px;background:#f6f1e7;display:grid;place-items:center;overflow:hidden;margin-top:6px}
+.card .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
 .card .pic .ph{font-size:64px}
 .card h3{font-size:17px;line-height:1.25;margin:12px 0 6px;font-weight:800;min-height:2.5em}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}
