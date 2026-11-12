@@ -187,7 +187,7 @@ const API = 'https://script.google.com/macros/s/AKfycbxJNTB3ZJ3dUBp1To3qaIrQ-SLk
   const safeUrl = u => /^https?:\/\//i.test(u || '') ? u : '';
   const safeImg = u => /^https?:\/\//i.test(u || '') || /^images\/[\w.-]+$/.test(u || '') ? u : '';
   const fmtPrice = p => (typeof p === 'number' && isFinite(p)) ? p.toFixed(2).replace('.', ',') + ' €' : null;
-  const shopName = u => { try { const h = new URL(u).hostname.replace(/^www\./,''); return h.includes('smyths') ? 'Smyths Toys' : h.includes('grande') ? 'La Grande Récré' : h.includes('cultura') ? 'Cultura' : h; } catch { return 'la boutique'; } };
+  const shopName = u => { try { const h = new URL(u).hostname.replace(/^www\./,''); return h.includes('smyths') ? 'Smyths Toys' : h.includes('grande') ? 'La Grande Récré' : h.includes('cultura') ? 'Cultura' : h.includes('lunii') ? 'Lunii' : h; } catch { return 'la boutique'; } };
   const store = { get(k){ try { return localStorage.getItem(k); } catch { return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch {} } };
 
   // Code famille : lu dans le lien (#code), puis mémorisé dans le navigateur
