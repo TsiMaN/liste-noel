@@ -228,7 +228,7 @@ const API = 'https://script.google.com/macros/s/AKfycbxJNTB3ZJ3dUBp1To3qaIrQ-SLk
   }
   const tilts = [-2.2, 1.6, -1, 2.4, -1.8, 1, 2, -2.6];
   function renderBoard() {
-    const list = toys.filter(t => t.child === current).sort((a,b) => a.order - b.order);
+    const list = toys.filter(t => t.child === current).sort((a,b) => (reserved.has(a.id) - reserved.has(b.id)) || (a.order - b.order));
     const b = $('#board');
     if (!list.length) { b.innerHTML = '<p class="empty" style="grid-column:1/-1">La liste arrive bientôt… ✨</p>'; return; }
     b.innerHTML = list.map((t, i) => {
