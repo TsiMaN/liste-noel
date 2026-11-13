@@ -237,7 +237,7 @@ const API = 'https://script.google.com/macros/s/AKfycbxJNTB3ZJ3dUBp1To3qaIrQ-SLk
         <div class="taken-wrap"><div class="pic">${img ? `<img src="${esc(img)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : '<span class="ph">🎁</span>'}</div>
         ${taken ? '<div class="stamp">Déjà réservé</div>' : ''}</div>
         <h3>${esc(t.name)}</h3>
-        ${url ? `<a class="shop" href="${esc(url)}" target="_blank" rel="noopener">Voir chez ${esc(shopName(url))} ↗</a>` : '<span></span>'}
+        ${url ? `<a class="shop" href="${esc(url)}" target="_blank" rel="noopener">Voir chez ${esc(shopName(url))} ↗</a>` : (t.url ? `<span class="shop">En magasin chez ${esc(t.url)}</span>` : '<span></span>')}
         <div class="row">
           <span class="price ${price ? '' : 'na'}">${price || 'Prix à venir'}</span>
           <label class="check"><input type="checkbox" data-toy="${esc(t.id)}" ${taken ? 'checked disabled' : ''} aria-label="Réserver ${esc(t.name)}">${taken ? 'Pris' : "J'offre"}</label>
